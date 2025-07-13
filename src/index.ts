@@ -108,6 +108,11 @@ export async function startServer(
 			res.send(`Boilerplate MCP Server v${VERSION} is running`);
 		});
 
+		// Health check endpoint
+		app.get('/health', (_req: Request, res: Response) => {
+			res.send('OK');
+		});
+
 		// Start HTTP server
 		const PORT = Number(process.env.PORT ?? 3000);
 		await new Promise<void>((resolve) => {
