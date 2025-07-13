@@ -10,13 +10,6 @@ export const MessageOptimizerToolArgs = z
 			.describe(
 				'The original first user message that needs optimization for better UX/UI output',
 			),
-		isFirstMessage: z
-			.boolean()
-			.optional()
-			.default(true)
-			.describe(
-				'Indicates if this is the first user message in the conversation (should be true when calling this tool)',
-			),
 	})
 	.strict();
 

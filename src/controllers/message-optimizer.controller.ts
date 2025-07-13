@@ -15,13 +15,11 @@ import { ControllerResponse } from '../types/common.types.js';
  * @memberof MessageOptimizerController
  * @param {Object} args - Arguments containing optimization parameters
  * @param {string} args.originalMessage - The original message to optimize
- * @param {boolean} [args.isFirstMessage=true] - Whether this is the first message
  * @returns {Promise<ControllerResponse>} A promise that resolves to the standard controller response containing the formatted optimization results in Markdown.
  * @throws {McpError} Throws an McpError if the service call fails or returns an error.
  */
 async function optimizeMessage(args: {
 	originalMessage: string;
-	isFirstMessage?: boolean;
 }): Promise<ControllerResponse> {
 	const methodLogger = Logger.forContext(
 		'controllers/message-optimizer.controller.ts',
@@ -33,28 +31,7 @@ async function optimizeMessage(args: {
 		// Apply defaults
 		const options = {
 			originalMessage: args.originalMessage,
-			isFirstMessage: args.isFirstMessage ?? true,
 		};
-
-		// Only optimize if this is marked as the first message
-		if (!options.isFirstMessage) {
-			const noOptimizationResult = {
-				enhancedPrompt: options.originalMessage,
-				wasEnhanced: false,
-				originalLength: options.originalMessage.length,
-				enhancedLength: options.originalMessage.length,
-				improvementSuggestions: [],
-			};
-
-			const formattedContent = formatMessageOptimizerResults(
-				noOptimizationResult,
-				options.originalMessage,
-			);
-
-			return {
-				content: formattedContent,
-			};
-		}
 
 		// Skip optimization for very short messages
 		if (options.originalMessage.trim().length < 10) {

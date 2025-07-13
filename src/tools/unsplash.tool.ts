@@ -74,7 +74,7 @@ function registerTools(server: McpServer) {
 
 	server.tool(
 		'unsplash_search_images',
-		`Search for high-quality images from Unsplash. Use this tool when you need to find images based on a search query. Returns detailed information about images including URLs, photographer information, and image dimensions. Requires UNSPLASH_ACCESS_KEY environment variable to be configured.`,
+		`Search for high-quality images from Unsplash. Use this tool when you need to find images based on a search query. Returns detailed information about images including URLs, photographer information, and image dimensions.`,
 		UnsplashImageSearchToolSchema.shape,
 		handleUnsplashImageSearch,
 	);

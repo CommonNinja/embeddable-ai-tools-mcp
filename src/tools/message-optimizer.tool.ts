@@ -73,7 +73,7 @@ function registerTools(server: McpServer) {
 
 	server.tool(
 		'optimize_first_user_message',
-		`Optimizes the first user message in a conversation to improve UX/UI specifications and add modern web development best practices. This tool should only be called for the initial user request to enhance it with better design guidelines, accessibility features, and technical specifications. Requires OPENAI_API_KEY environment variable to be configured.`,
+		`Optimizes user requests for creating UI components/widgets to improve UX/UI specifications and add modern web development best practices. Call this tool when a user asks to create, build, or design any UI element (like cards, forms, buttons, etc.) to enhance their request with better design guidelines, accessibility features, and technical specifications. This helps ensure the resulting UI meets modern standards.`,
 		MessageOptimizerToolSchema.shape,
 		handleMessageOptimization,
 	);
