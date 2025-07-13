@@ -13,6 +13,7 @@
 		"mcp-server": "./dist/index.js"
 	},
 	"scripts": {
+		"start": "TRANSPORT_MODE=http node dist/index.js",
 		"build": "tsc",
 		"prepare": "npm run build && node scripts/ensure-executable.js",
 		"postinstall": "node scripts/ensure-executable.js",
