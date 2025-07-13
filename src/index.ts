@@ -111,7 +111,7 @@ export async function startServer(
 		});
 
 		// Health check endpoint
-		app.get('/health', (_req: Request, res: Response) => {
+		app.get('/health', async (_req: Request, res: Response) => {
 			res.send('OK');
 		});
 

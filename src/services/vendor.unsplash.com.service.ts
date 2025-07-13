@@ -20,11 +20,6 @@ const serviceLogger = Logger.forContext(
 // Log service initialization
 serviceLogger.debug('Unsplash API service initialized');
 
-// Initialize Unsplash API
-const unsplash = createApi({
-	accessKey: process.env.UNSPLASH_ACCESS_KEY || '',
-});
-
 /**
  * @namespace VendorUnsplashService
  * @description Service layer for interacting directly with the Unsplash API.
@@ -51,12 +46,23 @@ async function searchImages(
 
 	try {
 		// Check if API key is configured
-		if (!process.env.UNSPLASH_ACCESS_KEY) {
+		const apiKey = process.env.UNSPLASH_ACCESS_KEY;
+		if (!apiKey) {
 			methodLogger.warn('UNSPLASH_ACCESS_KEY not configured');
 			throw createApiError(
 				'UNSPLASH_ACCESS_KEY environment variable is not configured',
 			);
 		}
+
+		// Debug: Log API key info (only first/last few chars for security)
+		methodLogger.debug(
+			`API key configured: ${apiKey.substring(0, 6)}...${apiKey.substring(apiKey.length - 4)}`,
+		);
+
+		// Initialize Unsplash API with fresh key (in case env vars changed)
+		const unsplash = createApi({
+			accessKey: apiKey,
+		});
 
 		// Perform the search
 		const result = await unsplash.search.getPhotos({
