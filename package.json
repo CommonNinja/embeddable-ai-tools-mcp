@@ -14,6 +14,7 @@
 	},
 	"scripts": {
 		"start": "TRANSPORT_MODE=http node dist/index.js",
+		"dev": "TRANSPORT_MODE=http npm run dev:http",
 		"build": "tsc",
 		"prepare": "npm run build && node scripts/ensure-executable.js",
 		"postinstall": "node scripts/ensure-executable.js",
@@ -80,6 +81,7 @@
 		"cors": "^2.8.5",
 		"dotenv": "^17.0.0",
 		"express": "^5.1.0",
+		"unsplash-js": "^7.0.19",
 		"zod": "^3.25.67"
 	},
 	"publishConfig": {

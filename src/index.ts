@@ -11,8 +11,9 @@ import express from 'express';
 import cors from 'cors';
 
 // Import tools and resources
-import ipAddressTools from './tools/ipaddress.tool.js';
-import ipAddressResources from './resources/ipaddress.resource.js';
+// import ipAddressTools from './tools/ipaddress.tool.js';
+// import ipAddressResources from './resources/ipaddress.resource.js';
+import unsplashTools from './tools/unsplash.tool.js';
 
 const logger = Logger.forContext('index.ts');
 
@@ -46,8 +47,9 @@ export async function startServer(
 
 	// Register tools and resources
 	serverLogger.info('Registering MCP tools and resources...');
-	ipAddressTools.registerTools(serverInstance);
-	ipAddressResources.registerResources(serverInstance);
+	// ipAddressTools.registerTools(serverInstance);
+	// ipAddressResources.registerResources(serverInstance);
+	unsplashTools.registerTools(serverInstance);
 	serverLogger.debug('All tools and resources registered');
 
 	if (mode === 'stdio') {
