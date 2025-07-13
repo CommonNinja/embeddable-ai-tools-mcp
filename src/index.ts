@@ -16,6 +16,7 @@ import cors from 'cors';
 import unsplashTools from './tools/unsplash.tool.js';
 import messageOptimizerTools from './tools/message-optimizer.tool.js';
 import fileExtractorTools from './tools/file-extractor.tool.js';
+import urlAnalyzerTools from './tools/url-analyzer.tool.js';
 
 const logger = Logger.forContext('index.ts');
 
@@ -54,6 +55,7 @@ export async function startServer(
 	unsplashTools.registerTools(serverInstance);
 	messageOptimizerTools.registerTools(serverInstance);
 	fileExtractorTools.registerTools(serverInstance);
+	urlAnalyzerTools.registerTools(serverInstance);
 	serverLogger.debug('All tools and resources registered');
 
 	if (mode === 'stdio') {
