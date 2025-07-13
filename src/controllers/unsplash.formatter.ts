@@ -76,4 +76,4 @@ export function formatUnsplashResults(
 	lines.push(`*Search performed at ${formatDate(new Date())}*`);
 
 	return lines.join('\n');
-} 
+}
