@@ -14,6 +14,7 @@ import cors from 'cors';
 // import ipAddressTools from './tools/ipaddress.tool.js';
 // import ipAddressResources from './resources/ipaddress.resource.js';
 import unsplashTools from './tools/unsplash.tool.js';
+import messageOptimizerTools from './tools/message-optimizer.tool.js';
 
 const logger = Logger.forContext('index.ts');
 
@@ -50,6 +51,7 @@ export async function startServer(
 	// ipAddressTools.registerTools(serverInstance);
 	// ipAddressResources.registerResources(serverInstance);
 	unsplashTools.registerTools(serverInstance);
+	messageOptimizerTools.registerTools(serverInstance);
 	serverLogger.debug('All tools and resources registered');
 
 	if (mode === 'stdio') {
