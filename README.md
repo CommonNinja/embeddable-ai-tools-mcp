@@ -50,6 +50,11 @@ npm run mcp:http
 npm run mcp:inspect
 ```
 
+# Tunneling
+```bash
+npx untun@latest tunnel http://localhost:5006
+```
+
 ## Transport Modes
 
 ### STDIO Transport
