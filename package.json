@@ -1,5 +1,5 @@
 {
-	"name": "@aashari/boilerplate-mcp-server",
+	"name": "embeddable-ai-tools-mcp",
 	"version": "1.11.2",
 	"description": "TypeScript MCP server boilerplate with STDIO and HTTP transport support, CLI tools, and extensible architecture",
 	"main": "dist/index.js",

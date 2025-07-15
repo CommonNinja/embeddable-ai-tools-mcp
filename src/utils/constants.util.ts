@@ -15,7 +15,7 @@ export const VERSION = '1.5.4';
  * Package name with scope
  * Used for initialization and identification
  */
-export const PACKAGE_NAME = '@aashari/boilerplate-mcp-server';
+export const PACKAGE_NAME = 'embeddable-ai-tools-mcp';
 
 /**
  * CLI command name

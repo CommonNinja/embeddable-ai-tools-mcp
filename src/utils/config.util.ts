@@ -92,9 +92,9 @@ class ConfigLoader {
 
 			// Determine the potential keys for the current package
 			const shortKey = 'boilerplate'; // Project-specific short key
-			const fullPackageName = this.packageName; // e.g., '@aashari/boilerplate-mcp-server'
+			const fullPackageName = this.packageName; // e.g., 'embeddable-ai-tools-mcp'
 			const unscopedPackageName =
-				fullPackageName.split('/')[1] || fullPackageName; // e.g., 'boilerplate-mcp-server'
+				fullPackageName.split('/')[1] || fullPackageName; // e.g., 'embeddable-ai-tools-mcp'
 
 			const potentialKeys = [
 				shortKey,
@@ -170,4 +170,4 @@ class ConfigLoader {
 }
 
 // Create and export a singleton instance with the package name from package.json
-export const config = new ConfigLoader('@aashari/boilerplate-mcp-server');
+export const config = new ConfigLoader('embeddable-ai-tools-mcp');

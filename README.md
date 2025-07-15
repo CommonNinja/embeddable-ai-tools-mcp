@@ -1,4 +1,4 @@
-# Boilerplate MCP Server
+# embeddable-ai-tools-mcp
 
 A foundation for developing custom Model Context Protocol (MCP) servers in TypeScript. Provides a complete layered architecture pattern, working example tools, and developer infrastructure to connect AI assistants with external APIs and data sources.
 
