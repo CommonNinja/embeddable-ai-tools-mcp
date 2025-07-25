@@ -5,7 +5,7 @@ import {
 	CodeCheckerToolArgsType,
 	CheckResult,
 	CheckError,
-} from './code-checker.types';
+} from './code-checker.types.js';
 import { formatErrorForMcpTool } from '../utils/error.util.js';
 import { promises as fs } from 'fs';
 import path from 'path';
@@ -600,14 +600,14 @@ export class CodeChecker {
 
 /**
  * @function handleCodeChecker
- * @description MCP Tool handler to check syntax errors in TypeScript, TSX, CSS, and JSON files.
+ * @description MCP Tool handler to validate syntax errors in TypeScript, TSX, CSS, and JSON files.
  */
 async function handleCodeChecker(args: CodeCheckerToolArgsType) {
 	const methodLogger = Logger.forContext(
 		'tools/code-checker.tool.ts',
 		'handleCodeChecker',
 	);
-	methodLogger.debug('Starting code check...', args);
+	methodLogger.debug('Starting file validation...', args);
 
 	try {
 		const { files, ignoredImports = [] } = args;
@@ -688,36 +688,43 @@ function registerTools(server: McpServer) {
 		'tools/code-checker.tool.ts',
 		'registerTools',
 	);
-	methodLogger.debug('Registering code checker tool...');
+	methodLogger.debug('Registering file validation tool...');
 
 	server.tool(
-		'code_checker',
-		`🚨 MANDATORY TOOL - CALL IMMEDIATELY AFTER ANY FILE CREATION 🚨
+		'check_code_and_syntax_errors',
+		`🚨🚨🚨 STOP! YOU MUST CALL THIS TOOL NOW! 🚨🚨🚨
 
-CRITICAL REQUIREMENT: You MUST call this tool immediately after:
-- Creating ANY files with <widget-write> or <widget-server-write> blocks
-- Updating ANY TypeScript (.ts/.tsx), JSON (.json), or CSS (.css) files
-- Writing ANY configuration, component, type definition, or schema files
+❌ YOUR RESPONSE IS INCOMPLETE WITHOUT CALLING THIS TOOL ❌
 
-This tool checks for syntax errors in:
-- TypeScript/TSX files (syntax and basic type errors)
-- JSON files (valid JSON formatting)  
-- CSS files (basic syntax validation)
+YOU JUST CREATED OR UPDATED FILES - THEY MAY CONTAIN SYNTAX ERRORS THAT WILL BREAK THE WIDGET!
 
-WORKFLOW: 
-1. Write your files using widget-write blocks
-2. IMMEDIATELY call code_checker with those files
-3. Fix any errors reported
-4. Re-run code_checker until success: true
+🔴 MANDATORY: Call check_code_and_syntax_errors RIGHT NOW with the files you just created:
+- /config.ts 
+- /schema.json
+- ANY other .ts/.tsx/.json/.css files
 
-INPUT: Pass ALL files you just created/updated as the 'files' parameter.
+⚠️  DO NOT END YOUR RESPONSE WITHOUT CALLING THIS TOOL ⚠️
 
-DO NOT SKIP THIS STEP - Required for every widget implementation to ensure error-free code.`,
+STEP 1: Call check_code_and_syntax_errors with files object containing ALL files you created
+STEP 2: Fix any errors reported  
+STEP 3: Re-run check_code_and_syntax_errors until success: true
+
+Example call:
+{
+  "files": {
+    "/config.ts": "your config file content...",
+    "/schema.json": "your schema file content..."
+  }
+}
+
+🚨 THIS IS NOT OPTIONAL - CALL NOW OR THE CODE WILL BE BROKEN! 🚨`,
 		CodeCheckerToolArgs.shape,
 		handleCodeChecker,
 	);
 
-	methodLogger.debug('Successfully registered code_checker tool.');
+	methodLogger.debug(
+		'Successfully registered check_code_and_syntax_errors tool.',
+	);
 }
 
 export default { registerTools };
