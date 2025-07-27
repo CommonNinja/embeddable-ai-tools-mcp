@@ -387,3 +387,15 @@ exampleTool.register(server);
 - [MCP Specification](https://github.com/modelcontextprotocol/mcp-spec)
 - [Official MCP Documentation](https://www.modelcontextprotocol.ai/)
 - [TypeScript Documentation](https://www.typescriptlang.org/docs/)
+
+## AWS Logging
+
+Trail logs:
+```
+aws logs tail /aws/apprunner/embeddable-ai-tools-mcp/a5850b27fcda48809bac8a975dd34571/application --since 1h --follow --region us-west-2
+```
+
+Filter:
+```
+aws logs tail /aws/apprunner/embeddable-ai-tools-mcp/a5850b27fcda48809bac8a975dd34571/application --follow --region us-west-2 | grep error
+```
