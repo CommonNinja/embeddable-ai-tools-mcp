@@ -73,7 +73,7 @@ function registerTools(server: McpServer) {
 
 	server.tool(
 		'extract_file_urls_content',
-		`Use this tool to extract file URLs (PDFs, CSVs, TXTs, etc.) from user messages and extract their content. Perfect for prompts that include file links like: "analyze this PDF", "read this CSV file", "extract text from this document", or when users share file links in markdown format.`,
+		`Extract file URLs (PDFs, CSVs, TXTs, etc.) and their content from user messages. Use when prompt includes file links like: "analyze this PDF", "read this CSV file", "extract text from this document", or when users share file links in markdown format.`,
 		FileExtractorToolSchema.shape,
 		handleFileExtraction,
 	);

@@ -61,50 +61,7 @@ function registerTools(server: McpServer) {
 
 	server.tool(
 		'analyze_url_for_design_and_content',
-		`🎨 Advanced URL analyzer for design inspiration, component extraction, and content analysis. 
-		🚨 IMPORTANT: Don't use this tool if a URL is being referenced in a <widget-*> tag.
-
-Perfect for prompts like:
-• "Use this website as a style reference"
-• "Create a widget based on this design"  
-• "Extract components from this interface"
-• "Analyze the UX patterns in this app"
-• "Get the color palette from this site"
-
-✨ Key Features:
-- Smart content detection (images vs websites)
-- Multiple analysis aspects (design, colors, typography, components, UX patterns)
-- Different focus modes (widget creation, design inspiration, full replication)
-- Various output formats (structured, JSON, markdown, code-focused)
-- Optional code examples generation
-- Comprehensive accessibility and responsive design analysis
-
-📋 Analysis Aspects:
-- Layout & Structure: Grid systems, spacing, hierarchy
-- Color Palette: Primary/secondary colors, accessibility
-- Typography: Font families, sizes, hierarchy
-- Components: Buttons, forms, navigation elements
-- Content: Text structure, CTAs, messaging
-- Functionality: Interactions, user flows
-- UX Patterns: Design conventions, user experience
-- Responsive Design: Breakpoints, mobile adaptation
-- Accessibility: Contrast, screen readers, ARIA
-
-🎯 Focus Modes:
-- widget_creation: Extract standalone components
-- design_inspiration: Creative patterns and principles  
-- component_library: Systematic design system elements
-- full_replication: Pixel-perfect reproduction specs
-- content_extraction: Text and messaging analysis
-- ux_research: User experience insights
-
-📤 Output Formats:
-- structured: Easy-to-read formatted analysis
-- json: Machine-readable structured data
-- markdown: Documentation-ready format
-- code: Implementation-focused with CSS/code examples
-
-Use this tool to transform any visual interface into actionable design and development insights.`,
+		`Analyzes websites/screenshots to extract design patterns, colors, typography, and components for design inspiration and widget creation. Don't use if URL is already wrapped in <widget-*> command.`,
 		UrlAnalyzerToolArgs.shape,
 		handleUrlAnalyzer,
 	);
