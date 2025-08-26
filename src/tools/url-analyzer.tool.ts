@@ -61,7 +61,7 @@ function registerTools(server: McpServer) {
 
 	server.tool(
 		'analyze_url_for_design_and_content',
-		`Analyzes websites/screenshots to extract design patterns, colors, typography, and components for design inspiration and widget creation. Don't use if URL is already wrapped in <widget-*> command.`,
+		`Analyzes websites/screenshots to extract design patterns, colors, typography, and components for design inspiration and widget creation. Don't use if URL is part of a <widget-website-data> command. For example: <widget-website-data url="https://www.google.com">...</widget-website-data>`,
 		UrlAnalyzerToolArgs.shape,
 		handleUrlAnalyzer,
 	);
