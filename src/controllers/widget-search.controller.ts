@@ -38,8 +38,8 @@ async function runVectorSearchForWidget(widgetId: string, input: string, limit: 
 
 	try {
 		await client.connect();
-		const database = client.db('ai');
-		const coll = database.collection('embeddings');
+		const database = client.db('embeddable-core');
+		const coll = database.collection('embedded_files');
 
 		const queryVector = await getEmbedding(input);
 
@@ -122,8 +122,8 @@ export async function searchCodebase(
 
 	try {
 		await client.connect();
-		const database = client.db('ai');
-		const collection = database.collection('embeddings');
+		const database = client.db('embeddable-core');
+		const collection = database.collection('embedded_files');
 
 		switch (searchType) {
 			case 'semantic':
