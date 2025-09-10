@@ -51,11 +51,13 @@ async function runVectorSearchForWidget(widgetId: string, input: string, limit: 
 					queryVector,
 					numCandidates: 600,
 					limit,
+					filter: {
+						widgetId,
+					},
 				},
 			},
 			{
 				$match: {
-					widgetId,
 					type: 'code',
 				},
 			},
