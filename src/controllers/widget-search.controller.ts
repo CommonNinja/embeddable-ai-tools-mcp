@@ -29,7 +29,7 @@ async function getEmbedding(data: string): Promise<number[]> {
 /**
  * Vector search specifically for widget code files
  */
-async function runVectorSearchForWidget(widgetId: string, input: string, limit: number = 10): Promise<SearchResult[]> {
+async function runVectorSearchForWidget(widgetId: string, input: string, limit: number = 5): Promise<SearchResult[]> {
 	const mongoUri = process.env.EMBEDDINGS_MONGODB_URI;
 	if (!mongoUri) {
 		throw new Error('EMBEDDINGS_MONGODB_URI environment variable is required');
