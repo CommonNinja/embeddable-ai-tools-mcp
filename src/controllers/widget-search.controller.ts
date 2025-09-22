@@ -112,7 +112,7 @@ export async function searchCodebase(
 	widgetId: string,
 	query: string,
 	searchType: 'semantic' | 'exact' | 'filename' = 'semantic',
-	limit: number = 10
+	limit: number = 5
 ): Promise<SearchResult[]> {
 	const mongoUri = process.env.EMBEDDINGS_MONGODB_URI;
 	if (!mongoUri) {
