@@ -76,26 +76,30 @@ function registerTools(server: McpServer) {
 
 	server.tool(
 		'search_widget_files',
-		`🔍 **Search Widget Codebase for Relevant Files**
+		`🚨🚨🚨 MANDATORY BEFORE ANY WIDGET CHANGES 🚨🚨🚨
 
-This tool helps you find the most relevant files in a widget's codebase for making changes. Perfect for understanding which files to modify when implementing features or fixing issues.
+**ABSOLUTE REQUIREMENT**: You CANNOT modify ANY existing widget files without using this tool FIRST. NO EXCEPTIONS.
+
+**WHY THIS EXISTS**: This tool helps you find the most relevant files in a widget's codebase for making changes. Perfect for understanding which files to modify when implementing features or fixing issues.
+
+**MANDATORY USAGE PATTERN**:
+1. 🔍 **USE THIS TOOL FIRST** - Search for ALL relevant files
+2. 📖 **READ ALL FOUND FILES** - Understand current structure completely  
+3. 🔄 **CASCADING SEARCH** - Search for imports/dependencies discovered in files
+4. ⚡ **COMPLETE UNDERSTANDING** - Build full context before ANY modifications
+5. 🎯 **TARGETED CHANGES ONLY** - Modify only what was specifically requested
+
+**FORBIDDEN - WILL CAUSE CATASTROPHIC FAILURES**:
+❌ Making ANY file changes without searching first
+❌ Rebuilding entire widgets instead of targeted modifications  
+❌ Overwriting existing functionality that works fine
+❌ Assuming you know file structure without searching
 
 **Search Types:**
 - **semantic** (default): AI-powered conceptual search - finds files based on functionality and purpose
 - **exact**: Text pattern matching - finds files containing specific code or text
 - **filename**: File name matching - finds files by name patterns
-
-**When to use:**
-- "Which file handles user authentication?" → semantic search
-- "Find files with 'handleSubmit' function" → exact search  
-- "Find all component files" → filename search with "component"
-
-**Examples:**
-- \`widgetId: "my-widget", query: "button component", searchType: "semantic"\`
-- \`widgetId: "my-widget", query: "useState", searchType: "exact"\`
-- \`widgetId: "my-widget", query: "*.tsx", searchType: "filename"\`
-
-Returns ranked list of relevant files with content previews to help you identify the right files to change.`,
+	`,
 		WidgetSearchToolSchema.shape,
 		handleWidgetSearch,
 	);
