@@ -181,26 +181,18 @@ export async function searchCodebase(
  */
 function formatSearchResults(results: SearchResult[], query: string): string {
 	if (results.length === 0) {
-		return `## No Results Found\n\nNo files found for query: "${query}"`;
+		return `No files found for query: "${query}"`;
 	}
 
-	let output = `## Search Results for "${query}"\n\n`;
-	output += `Found ${results.length} relevant files:\n\n`;
-
-	results.forEach((result, index) => {
-		output += `### ${index + 1}. ${result.filePath}\n`;
-		output += `**Match Type**: ${result.matchType}\n`;
-		if (result.score) {
-			output += `**Relevance Score**: ${result.score.toFixed(3)}\n`;
-		}
-		output += `**Lines**: ${result.lineStart}-${result.lineEnd}\n`;
-		
-		// Show a preview of the content (first 200 characters)
-		const preview = result.content;
-		output += `**Preview**:\n\`\`\`\n${preview}\n\`\`\`\n\n`;
+	// Build proper JSON object
+	const filesObject: { [filePath: string]: string } = {};
+	
+	results.forEach((result) => {
+		filesObject[result.filePath] = result.content;
 	});
 
-	return output;
+	// Return formatted message with JSON
+	return `Found ${results.length} relevant files for "${query}":\n\n${JSON.stringify(filesObject, null, 2)}`;
 }
 
 /**
