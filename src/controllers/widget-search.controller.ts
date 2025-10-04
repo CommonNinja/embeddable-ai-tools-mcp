@@ -29,10 +29,16 @@ async function getEmbedding(data: string): Promise<number[]> {
 /**
  * Vector search specifically for widget code files
  */
-async function runVectorSearchForWidget(widgetId: string, input: string, limit: number = 5): Promise<SearchResult[]> {
+async function runVectorSearchForWidget(
+	widgetId: string,
+	input: string,
+	limit: number = 5,
+): Promise<SearchResult[]> {
 	const mongoUri = process.env.EMBEDDINGS_MONGODB_URI;
 	if (!mongoUri) {
-		throw new Error('EMBEDDINGS_MONGODB_URI environment variable is required');
+		throw new Error(
+			'EMBEDDINGS_MONGODB_URI environment variable is required',
+		);
 	}
 	const client = new MongoClient(mongoUri);
 
@@ -112,11 +118,13 @@ export async function searchCodebase(
 	widgetId: string,
 	query: string,
 	searchType: 'semantic' | 'exact' | 'filename' = 'semantic',
-	limit: number = 5
+	limit: number = 5,
 ): Promise<SearchResult[]> {
 	const mongoUri = process.env.EMBEDDINGS_MONGODB_URI;
 	if (!mongoUri) {
-		throw new Error('EMBEDDINGS_MONGODB_URI environment variable is required');
+		throw new Error(
+			'EMBEDDINGS_MONGODB_URI environment variable is required',
+		);
 	}
 	const client = new MongoClient(mongoUri);
 
@@ -186,7 +194,7 @@ function formatSearchResults(results: SearchResult[], query: string): string {
 
 	// Build proper JSON object
 	const filesObject: { [filePath: string]: string } = {};
-	
+
 	results.forEach((result) => {
 		filesObject[result.filePath] = result.content;
 	});
@@ -198,13 +206,18 @@ function formatSearchResults(results: SearchResult[], query: string): string {
 /**
  * Main controller function for widget search
  */
-async function search(args: WidgetSearchToolArgsType): Promise<ControllerResponse> {
+async function search(
+	args: WidgetSearchToolArgsType,
+): Promise<ControllerResponse> {
 	const methodLogger = Logger.forContext(
 		'controllers/widget-search.controller.ts',
 		'search',
 	);
-	
-	methodLogger.debug(`Searching widget ${args.widgetId} for: ${args.query} (${args.searchType})`, args);
+
+	methodLogger.debug(
+		`Searching widget ${args.widgetId} for: ${args.query} (${args.searchType})`,
+		args,
+	);
 
 	try {
 		// Call the search function
@@ -212,11 +225,13 @@ async function search(args: WidgetSearchToolArgsType): Promise<ControllerRespons
 			args.widgetId,
 			args.query,
 			args.searchType,
-			args.limit
+			args.limit,
 		);
 
-		methodLogger.debug(`Found ${results.length} results for query: ${args.query}`);
-		
+		methodLogger.debug(
+			`Found ${results.length} results for query: ${args.query}`,
+		);
+
 		// Format the response
 		const formattedContent = formatSearchResults(results, args.query);
 		methodLogger.debug(`Formatted content: ${formattedContent}`);
