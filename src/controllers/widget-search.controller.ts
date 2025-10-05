@@ -179,21 +179,21 @@ export async function searchCodebase(
 /**
  * Format search results for MCP response
  */
-function formatSearchResults(results: SearchResult[], query: string): string {
-	if (results.length === 0) {
-		return `No files found for query: "${query}"`;
-	}
+// function formatSearchResults(results: SearchResult[], query: string): string {
+// 	if (results.length === 0) {
+// 		return `No files found for query: "${query}"`;
+// 	}
 
-	// Build proper JSON object
-	const filesObject: { [filePath: string]: string } = {};
+// 	// Build proper JSON object
+// 	const filesObject: { [filePath: string]: string } = {};
 	
-	results.forEach((result) => {
-		filesObject[result.filePath] = result.content;
-	});
+// 	results.forEach((result) => {
+// 		filesObject[result.filePath] = result.content;
+// 	});
 
-	// Return formatted message with JSON
-	return `Found ${results.length} relevant files for "${query}":\n\n${JSON.stringify(filesObject, null, 2)}`;
-}
+// 	// Return formatted message with JSON
+// 	return `Found ${results.length} relevant files for "${query}":\n\n${JSON.stringify(filesObject, null, 2)}`;
+// }
 
 /**
  * Main controller function for widget search
@@ -215,14 +215,14 @@ async function search(args: WidgetSearchToolArgsType): Promise<ControllerRespons
 			args.limit
 		);
 
-		methodLogger.debug(`Found ${results.length} results for query: ${args.query}`);
+		// methodLogger.debug(`Found ${results.length} results for query: ${args.query}`);
 		
-		// Format the response
-		const formattedContent = formatSearchResults(results, args.query);
-		methodLogger.debug(`Formatted content: ${formattedContent}`);
+		// // Format the response
+		// const formattedContent = formatSearchResults(results, args.query);
+		// methodLogger.debug(`Formatted content: ${formattedContent}`);
 
 		return {
-			content: formattedContent,
+			content: JSON.stringify(results, null, 2),
 		};
 	} catch (error) {
 		methodLogger.error(
