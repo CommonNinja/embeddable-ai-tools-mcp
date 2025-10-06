@@ -78,7 +78,7 @@
 	"dependencies": {
 		"@anthropic-ai/sdk": "^0.56.0",
 		"@aws-sdk/client-lambda": "^3.844.0",
-		"@modelcontextprotocol/sdk": "^1.13.0",
+		"@modelcontextprotocol/sdk": "^1.19.1",
 		"axios": "^1.10.0",
 		"commander": "^14.0.0",
 		"cors": "^2.8.5",
