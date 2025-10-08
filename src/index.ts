@@ -15,6 +15,7 @@ import unsplashTools from './tools/unsplash.tool.js';
 import fileExtractorTools from './tools/file-extractor.tool.js';
 import urlAnalyzerTools from './tools/url-analyzer.tool.js';
 import widgetSearchTools from './tools/widget-search.tool.js';
+import widgetFileManagerTools from './tools/widget-file-manager.tool.js';
 // import messageOptimizerTools from './tools/message-optimizer.tool.js';
 // import codeCheckerTools from './tools/code-checker.tool.js';
 
@@ -56,6 +57,7 @@ export async function startServer(
 	fileExtractorTools.registerTools(serverInstance);
 	urlAnalyzerTools.registerTools(serverInstance);
 	widgetSearchTools.registerTools(serverInstance);
+	widgetFileManagerTools.registerTools(serverInstance);
 	serverLogger.debug('All tools and resources registered');
 
 	if (mode === 'stdio') {
