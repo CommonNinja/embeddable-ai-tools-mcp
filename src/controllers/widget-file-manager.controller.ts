@@ -88,139 +88,76 @@ async function invokeLambda(
 }
 
 /**
- * Helper function to lookup widget details from MongoDB
- */
-async function getWidgetDetails(widgetId: string) {
-	const methodLogger = logger.forMethod('getWidgetDetails');
-	const mongoUri = process.env.DATABASE_URL;
-
-	if (!mongoUri) {
-		throw new Error('DATABASE_URL environment variable is required');
-	}
-
-	const client = new MongoClient(mongoUri);
-
-	try {
-		await client.connect();
-		const database = client.db(); // Use default database from connection string
-
-		// Get widget
-		const widgetsCollection = database.collection('Widget');
-		const widget = await widgetsCollection.findOne({ widgetId });
-
-		if (!widget) {
-			throw createApiError(`Widget ${widgetId} not found`);
-		}
-
-		// Get organization owner
-		const membersCollection = database.collection('Member');
-		const owner = await membersCollection.findOne({
-			organizationId: widget.organizationId,
-			role: 'owner',
-		});
-
-		if (!owner) {
-			throw createApiError(`No owner found for widget ${widgetId}`);
-		}
-
-		return {
-			organizationId: widget.organizationId,
-			userId: owner.userId,
-			widget,
-		};
-	} catch (error) {
-		methodLogger.error('Failed to lookup widget details', error);
-		throw error;
-	} finally {
-		await client.close();
-	}
-}
-
-/**
  * Helper function to call indexing service
  */
-async function indexFiles(params: {
-	widgetId: string;
-	files: Record<string, string | null>;
-	runIndexCheck?: boolean;
-}) {
-	const methodLogger = logger.forMethod('indexFiles');
-	methodLogger.debug('Indexing files', params);
+// async function indexFiles(params: {
+// 	widgetId: string;
+// 	files: Record<string, string | null>;
+// 	runIndexCheck?: boolean;
+// }) {
+// 	const methodLogger = logger.forMethod('indexFiles');
+// 	methodLogger.debug('Indexing files', params);
 
-	const apiBaseUrl =
-		process.env.NEXT_PUBLIC_AI_SERVICE_URL || 'https://embeddable.co';
+// 	const apiBaseUrl =
+// 		process.env.NEXT_PUBLIC_AI_SERVICE_URL || 'https://embeddable.co';
 
-	try {
-		// Get organizationId and userId from database
-		const { organizationId, userId } = await getWidgetDetails(
-			params.widgetId,
-		);
+// 	try {
+// 		const result = await fetch(`${apiBaseUrl}/api/ai/index-files`, {
+// 			method: 'POST',
+// 			body: JSON.stringify({
+// 				files: params.files,
+// 				widgetId: params.widgetId,
+// 				runIndexCheck: false,
+// 			}),
+// 			headers: {
+// 				'Content-Type': 'application/json',
+// 			},
+// 			credentials: 'include',
+// 		});
 
-		const result = await fetch(`${apiBaseUrl}/api/ai/index-files`, {
-			method: 'POST',
-			body: JSON.stringify({
-				organizationId,
-				userId,
-				files: params.files,
-				widgetId: params.widgetId,
-				runIndexCheck: params.runIndexCheck || false,
-			}),
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			credentials: 'include',
-		});
+// 		if (!result.ok) {
+// 			throw createApiError('Failed to index files');
+// 		}
 
-		if (!result.ok) {
-			throw createApiError('Failed to index files');
-		}
-
-		return result.json();
-	} catch (error) {
-		methodLogger.error('Error indexing files', error);
-		throw error;
-	}
-}
+// 		return result.json();
+// 	} catch (error) {
+// 		methodLogger.error('Error indexing files', error);
+// 		throw error;
+// 	}
+// }
 
 /**
  * Helper function to delete widget files from index
  */
-async function deleteWidgetFiles(params: { widgetId: string }) {
-	const methodLogger = logger.forMethod('deleteWidgetFiles');
-	methodLogger.debug('Deleting widget files from index', params);
+// async function deleteWidgetFiles(params: { widgetId: string }) {
+// 	const methodLogger = logger.forMethod('deleteWidgetFiles');
+// 	methodLogger.debug('Deleting widget files from index', params);
 
-	const apiBaseUrl =
-		process.env.NEXT_PUBLIC_AI_SERVICE_URL || 'https://embeddable.co';
+// 	const apiBaseUrl =
+// 		process.env.NEXT_PUBLIC_AI_SERVICE_URL || 'https://embeddable.co';
 
-	try {
-		// Get organizationId and userId from database
-		const { organizationId, userId } = await getWidgetDetails(
-			params.widgetId,
-		);
+// 	try {
+// 		const result = await fetch(`${apiBaseUrl}/api/ai/index-files`, {
+// 			method: 'DELETE',
+// 			body: JSON.stringify({
+// 				widgetId: params.widgetId,
+// 			}),
+// 			headers: {
+// 				'Content-Type': 'application/json',
+// 			},
+// 			credentials: 'include',
+// 		});
 
-		const result = await fetch(`${apiBaseUrl}/api/ai/index-files`, {
-			method: 'DELETE',
-			body: JSON.stringify({
-				organizationId,
-				userId,
-				widgetId: params.widgetId,
-			}),
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			credentials: 'include',
-		});
+// 		if (!result.ok) {
+// 			throw createApiError('Failed to delete widget files');
+// 		}
 
-		if (!result.ok) {
-			throw createApiError('Failed to delete widget files');
-		}
-
-		return result.json();
-	} catch (error) {
-		methodLogger.error('Error deleting widget files', error);
-		throw error;
-	}
-}
+// 		return result.json();
+// 	} catch (error) {
+// 		methodLogger.error('Error deleting widget files', error);
+// 		throw error;
+// 	}
+// }
 
 /**
  * Get widget files from MongoDB (same as existing widget search)
@@ -435,10 +372,10 @@ async function writeFile(
 
 		// Index files if requested
 		try {
-			await indexFiles({
-				widgetId: args.widgetId,
-				files: files,
-			});
+			// await indexFiles({
+			// 	widgetId: args.widgetId,
+			// 	files: files,
+			// });
 			methodLogger.debug('Files indexed successfully');
 		} catch (error) {
 			methodLogger.error('Failed to index files', error);
@@ -570,9 +507,9 @@ async function deleteFile(
 		// Remove from index if requested
 		if (args.removeFromIndex) {
 			try {
-				await deleteWidgetFiles({
-					widgetId: args.widgetId,
-				});
+				// await deleteWidgetFiles({
+				// 	widgetId: args.widgetId,
+				// });
 				methodLogger.debug(
 					'Widget files removed from index successfully',
 				);
@@ -751,7 +688,6 @@ async function replaceLines(
 			widgetId: args.widgetId,
 			filePath: args.filePath,
 			content: newContent,
-			shouldIndex: args.shouldIndex,
 		});
 
 		// Parse the write result to determine success
