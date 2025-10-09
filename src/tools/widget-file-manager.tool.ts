@@ -129,7 +129,6 @@ function registerTools(server: McpServer) {
 		'widget_write_file',
 		`Write a file to a widget's codebase. This tool will:
 - Update the file in AWS S3 storage
-- Optionally index the file for AI search capabilities
 - Overwrite existing files with the same path
 
 Use this tool to create new files or update existing files in a widget.
@@ -145,7 +144,6 @@ IMPORTANT: Always use relative paths starting from the widget root (e.g., "/conf
 		'widget_delete_file',
 		`Delete a file from a widget's codebase. This tool will:
 - Remove the file from AWS S3 storage  
-- Optionally remove the file from AI search index
 - Permanently delete the specified file
 
 Use this tool to remove files that are no longer needed in a widget.

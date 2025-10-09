@@ -21,6 +21,7 @@ const logger = Logger.forContext(
 
 // Lambda function names
 const UPDATE_SRC_FUNCTION = 'embeddable-widget-src-update';
+const CREATE_SRC_FUNCTION = 'embeddable-create-new-widget';
 
 /**
  * Helper function to invoke AWS Lambda (aligned with existing service)
@@ -362,13 +363,22 @@ async function writeFile(
 		const files = {
 			[args.filePath]: args.content,
 		};
-
-		// Update files via Lambda
-		await invokeLambda(UPDATE_SRC_FUNCTION, {
+		const response = await invokeLambda(CREATE_SRC_FUNCTION, {
+			templateName: 'react-vite-template',
 			widgetId: args.widgetId,
 			files,
-			deletedFiles: [],
 		});
+
+		if (response?.message?.toLowerCase().includes('already exists')) {
+			console.log('Widget already exists, updating source instead');
+
+			// Update files via Lambda
+			await invokeLambda(UPDATE_SRC_FUNCTION, {
+				widgetId: args.widgetId,
+				files,
+				deletedFiles: [],
+			});
+		}
 
 		// Index files if requested
 		try {
@@ -378,7 +388,7 @@ async function writeFile(
 			// });
 			methodLogger.debug('Files indexed successfully');
 		} catch (error) {
-			methodLogger.error('Failed to index files', error);
+			methodLogger.error('Failed to update files', error);
 			// Don't fail the whole operation if indexing fails
 		}
 
